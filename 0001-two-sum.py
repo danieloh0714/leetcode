@@ -1,3 +1,5 @@
+# Time complexity: O(n)
+# Space complexity: O(n)
 def two_sum(nums: list, target: int) -> list:
     seen = dict()
     for i, n in enumerate(nums):
