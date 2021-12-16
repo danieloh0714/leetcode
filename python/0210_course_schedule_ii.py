@@ -1,10 +1,11 @@
 # Time complexity: O(V+E)
 # Space complexity: O(V+E)
-def can_finish(num_courses: int, prerequisites: list) -> bool:
+def find_order(num_courses: int, prerequisites: list) -> list:
     adj_list = [[] for _ in range(num_courses)]
     for course, prereq in prerequisites:
         adj_list[course].append(prereq)
 
+    ordering = []
     states = [-1 for _ in range(num_courses)]
     def cycle_check(course: int) -> bool:
         state = states[course]
@@ -14,9 +15,10 @@ def can_finish(num_courses: int, prerequisites: list) -> bool:
         for prereq in adj_list[course]:
             if cycle_check(prereq): return True
         states[course] = 1
+        ordering.append(course)
         return False
 
     for course in range(num_courses):
-        if cycle_check(course): return False
+        if cycle_check(course): return []
 
-    return True
+    return ordering
