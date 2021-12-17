@@ -8,7 +8,7 @@ def jump(nums: list) -> int:
         farthest = li
         for i in range(li, ri+1):
             farthest = max(farthest, i+nums[i])
-        li, ri = ri, farthest
+        li, ri = ri+1, farthest
         jumps += 1
 
     return jumps
