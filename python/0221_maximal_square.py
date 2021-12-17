@@ -1,22 +1,24 @@
 # Time complexity: O(mn)
-# Space complexity: O(mn)
+# Space complexity: O(n)
 def maximal_square(matrix: list) -> int:
     ans = 0
-    dp = [[0 for _ in range(len(matrix[0]))] for _ in range(len(matrix))]
 
-    def access_dp(r: int, c: int) -> int:
-        if r >= len(matrix) or c >= len(matrix[0]): return 0
-        return dp[r][c]
+    dp = [0 for _ in range(len(matrix[0])+1)]
+    prev_right = 0
 
     for r in reversed(range(len(matrix))):
         for c in reversed(range(len(matrix[0]))):
-            if matrix[r][c] == '0': continue
+            temp = dp[c]
 
-            right = access_dp(r, c+1)
-            diag = access_dp(r+1, c+1)
-            down = access_dp(r+1, c)
-            dp[r][c] = min(right, diag, down)+1
+            if matrix[r][c] == '0':
+                dp[c] = 0
+            else:
+                right = dp[c+1]
+                diag = prev_right
+                down = dp[c]
+                dp[c] = min(right, diag, down)+1
 
-            ans = max(ans, dp[r][c])
+            ans = max(ans, dp[c])
+            prev_right = temp
 
     return ans*ans
