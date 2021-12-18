@@ -52,8 +52,7 @@ class Twitter:
         while not min_heap.empty():
             feed.append(min_heap.get()[1])
 
-        feed.reverse()
-        return feed
+        return feed[::-1]
 
     def follow(self, follower_id: int, followee_id: int) -> None:
         if follower_id not in self.users:
