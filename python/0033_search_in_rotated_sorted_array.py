@@ -4,15 +4,14 @@ def search(nums: list, target: int) -> int:
     li, ri = 0, len(nums)-1
     while li <= ri:
         mi = (li+ri)//2
-        if target == nums[mi]:
-            return mi
+        if target == nums[mi]: return mi
         if nums[mi] <= nums[ri]:
-            if target > nums[mi] and target <= nums[ri]:
+            if nums[mi] < target <= nums[ri]:
                 li = mi+1
             else:
                 ri = mi-1
         else:
-            if target < nums[mi] and target >= nums[li]:
+            if nums[li] <= target < nums[mi]:
                 ri = mi-1
             else:
                 li = mi+1
