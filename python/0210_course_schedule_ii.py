@@ -5,20 +5,21 @@ def find_order(num_courses: int, prerequisites: list) -> list:
     for course, prereq in prerequisites:
         adj_list[course].append(prereq)
 
-    ordering = []
+    ans = []
     states = [-1 for _ in range(num_courses)]
-    def cycle_check(course: int) -> bool:
-        state = states[course]
-        if state == 0: return True
-        if state == 1: return False
+    def dfs(course: int) -> bool:
+        if states[course] == 0: return False
+        if states[course] == 1: return True
         states[course] = 0
+
         for prereq in adj_list[course]:
-            if cycle_check(prereq): return True
+            if not dfs(prereq): return False
+
         states[course] = 1
-        ordering.append(course)
-        return False
+        ans.append(course)
+        return True
 
     for course in range(num_courses):
-        if cycle_check(course): return []
+        if not dfs(course): return []
 
-    return ordering
+    return ans
